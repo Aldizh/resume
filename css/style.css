@@ -1,3 +1,9 @@
+/* Custom Css */
+#skills > li {
+  display: inline-block;
+}
+/* End Custom Css*/
+
 body,
 div,
 ul,
@@ -22,6 +28,10 @@ h6 {
 .work-entry,
 .project-entry {
   padding: 0 5%;
+}
+
+.education-entry {
+  padding-top: 10px;
 }
 
 h1 {
@@ -162,6 +172,7 @@ img {
 
 span {
   padding: 5px;
+  color: #f5a623;
 }
 
 #lets-connect {

@@ -14,20 +14,14 @@ var bio = {
 	"biopic": "images/me.jpg"
 };
 
-// This is the function for internationalizing name
-function inName() {
-  namesArray = bio.name.trim().split(" ");
-  return namesArray[0] + " " + (namesArray[1].toUpperCase());
-}
-
-//$("#main").prepend(internationalizeButton);
-
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
 bio.display = function() {
-	//Contact part
+	// Header display
+	var formattedName = HTMLheaderName.replace("%data%", bio.name);
+	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+	$("#header").prepend(formattedRole);
+	$("#header").prepend(formattedName);
+	
+	// Bio contacts display
 	var formattedHTMLmobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
 	var formattedHTMLemail = HTMLemail.replace("%data%", bio.contacts.email);
 	var formattedHTMLlinkedin = HTMLlinkedin.replace("%data%", bio.contacts.linkedin);
@@ -52,14 +46,21 @@ bio.display = function() {
 	$("#header").append(formattedMessage);
 	$("#header").append(formattedPic);
 	$("#header").append(HTMLskillsStart);
-	for (var i in bio.skills){
-		$("#skills").append(HTMLskills.replace("%data%",bio.skills[i]));
-	}
-}
+	bio.skills.forEach(function(skill) {
+		var formattedSkills = HTMLskills.replace("%data%", skill);
+		$("#skills").append(formattedSkills);
+	});
+};
 bio.display();
 
+/*This is the function for internationalizing name but leaving it uncommented as we need to style the button
+function inName() {
+  namesArray = bio.name.trim().split(" ");
+  return namesArray[0] + " " + (namesArray[1].toUpperCase());
+}
+$("#main").prepend(internationalizeButton);*/
 
-//WORK
+// WORK INFO
 var work = {
 	"jobs": [
 		{
@@ -93,11 +94,11 @@ work.display = function() {
 		var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[i].description);
 		$(".work-entry:last").append(formattedDescription);
 	}
-}
+};
 work.display();
 
 
-//EDUCATION
+// EDUCATION INFO
 var education = {
 	"schools": [
 		{
@@ -160,38 +161,42 @@ education.display = function() {
 		var formattedUrl = HTMLonlineURL.replace("%data%", education.onlineCourses[i].url);
 		$(".education-entry:last").append(formattedUrl);
 	}
-}
+};
 education.display();
 
 
 // PROJECTS
-var projects = [
-	{
-		"title": "Pacman",
-		"dates": "2011",
-		"description": "Based on the pacman game, implement an pacman agent that will finish the game in the fastest possible way",
-		"images": ["images/pacman.png"]
-	},
-	{
-		"title": "Copart Web App",
-		"dates": "2015",
-		"description": "An application that enables yard employees to enter information into the main database/system",
-		"images": ["images/copart.jpg"]
+var projects = {
+	"projects": [
+		{
+			"title": "Pacman",
+			"dates": "2011",
+			"description": "Based on the pacman game, implement an pacman agent that will finish the game in the fastest possible way",
+			"images": ["images/pacman.png"]
+		},
+		{
+			"title": "Copart Web App",
+			"dates": "2015",
+			"description": "An application that enables yard employees to enter information into the main database/system",
+			"images": ["images/copart.jpg"]
+		}
+	]
+};
+
+projects.display = function() {
+	for (var i in projects.projects) {
+		$('#projects').append(HTMLprojectStart);
+		var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+		$(".project-entry:last").append(formattedTitle);
+		var formattedDates= HTMLprojectDates.replace("%data%", projects.projects[i].dates);
+		$(".project-entry:last").append(formattedDates);
+		var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
+		$(".project-entry:last").append(formattedDescription);
+		var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[i].images[0]);
+		$(".project-entry:last").append(formattedImage);
 	}
-]
+};
+projects.display();
 
-for (var i in projects) {
-	$('#projects').append(HTMLprojectStart);
-	var formattedTitle = HTMLprojectTitle.replace("%data%", projects[i].title);
-	$(".project-entry:last").append(formattedTitle);
-	var formattedDates= HTMLprojectDates.replace("%data%", projects[i].dates);
-	$(".project-entry:last").append(formattedDates);
-	var formattedDescription = HTMLprojectDescription.replace("%data%", projects[i].description);
-	$(".project-entry:last").append(formattedDescription);
-	var formattedImage = HTMLprojectImage.replace("%data%", projects[i].images[0]);
-	$(".project-entry:last").append(formattedImage);
-}
-
-// Adding the map section
+// MAP SECTION
 $("#mapDiv").append(googleMap);
-
